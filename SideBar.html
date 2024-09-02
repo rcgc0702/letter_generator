@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+    </style>
+  </head>
+
+    <style>
+      input {
+        display: block;
+              height: 25px;
+          width: 250px;
+      }
+
+      label {
+        font-family: Tahoma, Verdana, sans-serif;
+      }
+
+      textarea {
+        white-space: pre-line;
+        white-space: pre-wrap;      
+      }
+    
+    input[type=text], .custom-select {
+      margin-bottom: 10px;
+    }
+
+    input[type=button] {
+      background-color: #4b7e41;
+      border: none;
+      text-decoration: none;
+      color: white;
+      padding: 5px 5px;
+      margin: 5px 5px;
+      cursor: pointer;
+      height: 45px;
+    }
+
+    label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+    }
+
+    select {
+        position: relative;
+        font-family: Arial;
+        width: 250px;
+        height: 25px;
+    }
+
+    #footer {
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:200px;   /* Height of the footer */
+    }
+
+    #videoNo, #partNo {
+      width: 45%;
+    }
+
+        .table-wrap { display: table; }
+    .table-wrap > * { display: table-cell; }
+
+    .table-wrap { width: 100%; }
+    .table-wrap > * {
+      box-sizing: border-box;
+      width: 30%; padding: 0px;
+    }
+
+    body {background-color: #ecfdf0;}
+    </style>
+  <body id="thebody">
+
+    <div>
+      <form id="myNewForm">
+      <label for="name">Student Name<label> 
+      <input type="text" id="name" name="name">
+
+      <label for="level1">Level: <label> 
+      <div class="custom-select" >
+        <select name="theLevels">
+          <option disabled selected value> -- select an option -- </option>
+          <option value="Level 1">Level 1</option>
+          <option value="Level 2">Level 2</option>
+          <option value="Level 3">Level 3</option>
+          <option value="Level 4">Level 4</option>
+          <option value="Level 5">Level 5</option>
+        </select>
+      </div>
+
+        <label for="channel">Channel:<label> 
+      <div class="custom-select">
+        <select name="theChannel" id="theChannel">
+          <option disabled selected value> -- select an option -- </option>
+       
+        </select>
+      </div>
+
+      <label for="link1">Link - Video:<label> 
+      <input type="text" id="link1" name="link1">
+
+      <div class="table-wrap">
+        <div>
+                <label for="videoNo">Video number:<label> 
+      <input type="text" id="videoNo" name="videoNo">
+        </div>
+        <div>
+                <label for="partNo">Part Number:<label> 
+      <input type="text" id="partNo" name="partNo">
+        </div>
+      </div>
+
+      <label for="sensei">Sensei:<label>
+      <div class="custom-select">
+        <select id="sensei" name="sensei">
+            <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+      <label for="assigner">Assigner:<label>
+      <div class="custom-select">
+        <select id="assigner" name="assigner">
+          <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+      <div id="footer">
+        <input class="footer" type="button" value="Submit" onclick="processMe()">
+          <div class="table-wrap">
+            <input class="footer" style="margin-top:30px;background-color: #ff7733;width:40%;" type="button" value="Add segmenter" onclick="addSegmenter()">
+            <input class="footer" style="margin-top:30px;background-color: #ff7733;width:40%;" type="button" value="Add TD comment" onclick="addTDComment()">
+          </div>
+      </div>
+      </form>
+    </div>
+
+  <script>
+
+   //
+    function processMe() {
+        var theStudent = document.getElementById('name').value;
+        window.open('https://contribute.viki.com/messages/compose?sendto='+ theStudent, "_blank","toolbar=no,top=500,left=500,width=450,height=700")
+
+        google.script.run.processData(document.getElementById("myNewForm"));
+    }
+
+    function addSegmenter() {
+
+      var theStudent = document.getElementById('theChannel').value;
+      var assignTheLink = ""
+
+      switch(theStudent) {
+        case "Training Video 1-Fates and Furies": 
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37663c?tab=team'
+          break;
+        case "Training Video 1-Graceful Family":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37663c?tab=team'
+          break;
+        case "Training Video 2-Devilish Joy":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37664c?tab=team'
+          break;
+        case "Training Video 2-Love Cells":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37664c?tab=team'
+          break;
+        case "Training Video 4-Cinderella Chef":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37666c?tab=team'
+          break;
+        case "Heroes":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/35502c?tab=team'
+          break;
+        case "Training Video 5-Princess Consort":
+          assignTheLink = 'https://contribute.viki.com/manage-channel/37700c!tab=team'
+          break;
+        default:
+          alert("Selected item has no link.")
+          break;
+      }
+
+      // https://contribute.viki.com/manage-channel/37663?tab=team
+      // https://contribute.viki.com/manage-channel/37663c?tab=team
+
+      window.open(assignTheLink)
+
+    }
+
+    function addToTheSelect(array) {
+
+      var selectEl = document.getElementById('sensei');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          selectEl.appendChild(opt);
+      }
+    }
+
+    function addTDComment() {
+      window.open(document.getElementById('link1').value)
+    }
+
+    function addToTheSelect(array) {
+
+      var selectEl = document.getElementById('sensei');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          selectEl.appendChild(opt);
+      }
+    }
+
+    function addToAssigner(array) {
+
+      var selectEl = document.getElementById('assigner');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          selectEl.appendChild(opt);
+      }
+    }
+
+    function addToChannel(array) {
+      var selectEl = document.getElementById('theChannel');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+         opt.value = array[i];
+         opt.innerHTML = array[i];
+         selectEl.appendChild(opt);
+      }
+    }
+
+    function repeatLoop(name) {
+      return name;
+    }
+
+    function receiveText(theText) {
+  
+      navigator.clipboard.writeText(theText);
+    }
+
+    window.onload = (event) => {      
+      google.script.run.withSuccessHandler(addToTheSelect).createTeachersArray('sensei')
+      google.script.run.withSuccessHandler(addToAssigner).createTeachersArray('assigner')
+     google.script.run.withSuccessHandler(addToChannel).createTeachersArray('theChannel')
+    };
+  </script>
+
+  </body>
+</html>
