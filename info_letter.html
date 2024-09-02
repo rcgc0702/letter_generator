@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+    </style>
+  </head>
+
+    <style>
+      input {
+        display: block;
+              height: 25px;
+          width: 250px;
+      }
+    input[type=text], .custom-select {
+      margin-bottom: 10px;
+    }
+    label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+    }
+      label {
+        font-family: Tahoma, Verdana, sans-serif;
+      }
+
+      textarea {
+        white-space: pre-line;
+        white-space: pre-wrap;      
+      }
+
+    input[type=button] {
+      background-color: #3a64fc;
+      border: none;
+      text-decoration: none;
+      color: white;
+      padding: 5px 5px;
+      margin: 5px 5px;
+      cursor: pointer;
+      height: 45px;
+    }
+
+    select {
+        position: relative;
+        font-family: Arial;
+        width: 250px;
+        height: 25px;
+    }
+
+    #footer {
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:45px;   /* Height of the footer */
+    }
+
+    #videoNo, #partNo, #videoNo2, #partNo2 {
+      width: 45%;
+    }
+
+    .table-wrap { display: table; }
+    .table-wrap > * { display: table-cell; }
+
+    .table-wrap { width: 100%; }
+    .table-wrap > * {
+      box-sizing: border-box;
+      width: 30%; padding: 0px;
+    }
+
+    body {background-color: #bfcbf5;}
+    </style>
+  <body id="thebody">
+
+    <div>
+      <form id="myNewForm">
+      <label for="name">Student Name<label> 
+      <input type="text" id="name" name="name">
+<!-- ssssssssssssssssssssssssssssssssssss -->
+        <label for="channel">Level:<label> 
+      <div class="custom-select">
+        <select name="theLevel" id="theLevel">
+          <option disabled selected value> -- select an option -- </option>
+          <option value="Sandbox">Sandbox</option>
+          <option value="Exam information">Exam information</option>
+        </select>
+      </div>
+
+      <label for="assigner">Assigner:<label>
+      <div class="custom-select">
+        <select id="assigner" name="assigner">
+          <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+      <div id="footer">
+        <input class="footer" type="button" value="Submit" onclick="processMe()">
+      </div>
+      </form>
+    </div>
+
+  <script>
+
+    function processMe() {
+        var theStudent = document.getElementById('name').value;
+        google.script.run.processTheInfoLetter(document.getElementById("myNewForm"));
+
+                var theStudent = document.getElementById('name').value;
+        window.open('https://contribute.viki.com/messages/compose?sendto='+ theStudent, "_blank","toolbar=no,top=500,left=500,width=400,height=700")
+    }
+
+    function addToAssigner(array) {
+
+      var selectEl = document.getElementById('assigner');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          selectEl.appendChild(opt);
+      }
+    }
+
+    window.onload = (event) => {      
+
+      google.script.run.withSuccessHandler(addToAssigner).createTeachersArray('assigner')
+    };
+  </script>
+
+  </body>
+</html>
