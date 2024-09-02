@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <style>
+    </style>
+  </head>
+
+    <style>
+      input {
+        display: block;
+              height: 25px;
+          width: 250px;
+      }
+    input[type=text], .custom-select {
+      margin-bottom: 10px;
+    }
+    label {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 15px;
+      font-weight: bold;
+    }
+      label {
+        font-family: Tahoma, Verdana, sans-serif;
+      }
+
+      textarea {
+        white-space: pre-line;
+        white-space: pre-wrap;      
+      }
+
+    input[type=button] {
+      background-color: #b11515;
+      border: none;
+      text-decoration: none;
+      color: white;
+      padding: 5px 5px;
+      margin: 5px 5px;
+      cursor: pointer;
+      height: 45px;
+    }
+
+    select {
+        position: relative;
+        font-family: Arial;
+        width: 250px;
+        height: 25px;
+    }
+
+    #footer {
+      position:absolute;
+      bottom:0;
+      width:100%;
+      height:45px;   /* Height of the footer */
+    }
+
+    #videoNo, #partNo, #videoNo2, #partNo2 {
+      width: 45%;
+    }
+
+    #segmentRange {
+      background-color: #ffff2e;
+    }
+
+    .table-wrap { display: table; }
+    .table-wrap > * { display: table-cell; }
+
+    .table-wrap { width: 100%; }
+    .table-wrap > * {
+      box-sizing: border-box;
+      width: 30%; padding: 0px;
+    }
+
+    body {background-color: #fab9ac;}
+    </style>
+  <body id="thebody">
+
+    <div>
+      <form id="myNewForm">
+      <label for="name">Student Name<label> 
+      <input type="text" id="name" name="name">
+<!-- ssssssssssssssssssssssssssssssssssss -->
+        <label for="channel">Channel:<label> 
+      <div class="custom-select">
+        <select name="theChannel" id="theChannel">
+          <option disabled selected value> -- select an option -- </option>
+       
+        </select>
+      </div>
+
+      <label for="link1">Video 1 - Segment Correction:<label> 
+      <input type="text" id="link1" name="link1">
+
+      <div class="table-wrap">
+        <div>
+                <label for="videoNo">Video number:<label> 
+      <input type="text" id="videoNo" name="videoNo">
+        </div>
+        <div>
+                <label for="partNo">Part Number:<label> 
+      <input type="text" id="partNo" name="partNo">
+        </div>
+        
+      </div>
+      <div>
+        <label for="segmentRange">Segment Range:<label> 
+        <input type="text" id="segmentRange" name="segmentRange"> <!-- added -->
+      </div>
+
+<!-- ssssssssssssssssssssssssssssssssssss -->
+        <label for="channel2">Channel:<label> 
+      <div class="custom-select">
+        <select name="theChannel2" id="theChannel2">
+          <option disabled selected value> -- select an option -- </option>
+       
+        </select>
+      </div>
+
+      <label for="link2">Video 2 - Segment Creation:<label> 
+      <input type="text" id="link2" name="link2">
+
+      <div class="table-wrap">
+      <div>
+              <label for="videoNo2">Video number:<label> 
+      <input type="text" id="videoNo2" name="videoNo2">
+      </div>
+      <div>
+              <label for="partNo2">Part Number:<label> 
+      <input type="text" id="partNo2" name="partNo2">
+      </div>
+      </div>
+<!-- ssssssssssssssssssssssssssssssssssss -->
+
+      <label for="sensei">Panelist 1:<label>
+      <div class="custom-select">
+        <select id="sensei" name="sensei">
+            <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+<!-- ssssssssssssssssssssssssssssssssssss -->
+      <label for="sensei2">Final Panelist:<label>
+      <div class="custom-select">
+        <select id="sensei2" name="sensei2">
+            <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+<!-- ssssssssssssssssssssssssssssssssssss -->
+
+      <label for="assigner">Assigner:<label>
+      <div class="custom-select">
+        <select id="assigner" name="assigner">
+          <option disabled selected value> -- select an option -- </option>
+        </select>
+      </div>
+
+      <div id="footer">
+        <input class="footer" type="button" value="Submit" onclick="processMe()">
+      </div>
+      </form>
+    </div>
+
+  <script>
+
+    function processMe() {
+        var theStudent = document.getElementById('name').value;
+        google.script.run.processGradData(document.getElementById("myNewForm"));
+
+                var theStudent = document.getElementById('name').value;
+        window.open('https://contribute.viki.com/messages/compose?sendto='+ theStudent, "_blank","toolbar=no,top=500,left=500,width=450,height=700")
+    }
+
+    function addToTheSelect(array) {
+
+      var selectEl = document.getElementById('sensei');
+      var selectE2 = document.getElementById('sensei2');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          var opt2 = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          opt2.value = array[i];
+          opt2.innerHTML = array[i];
+          selectEl.appendChild(opt);
+          selectE2.appendChild(opt2);
+      }
+    }
+
+    function addToAssigner(array) {
+
+      var selectEl = document.getElementById('assigner');
+
+      for (var i = 0; i<array.length; i++){
+          var opt = document.createElement('option');
+          opt.value = array[i];
+          opt.innerHTML = array[i];
+          selectEl.appendChild(opt);
+      }
+    }
+
+    function addToChannel(array) {
+      var selectEl = document.getElementById('theChannel');
+      var selectE2 = document.getElementById('theChannel2');
+
+      for (var i = 0; i<array.length; i++){
+        var opt = document.createElement('option');
+         opt.value = array[i];
+         opt.innerHTML = array[i];
+         selectEl.appendChild(opt);
+        var opt2 = document.createElement('option');
+         opt2.value = array[i];
+         opt2.innerHTML = array[i];
+         selectE2.appendChild(opt2);
+      }
+    }
+
+    window.onload = (event) => {      
+      google.script.run.withSuccessHandler(addToTheSelect).createTeachersArray('sensei')
+      google.script.run.withSuccessHandler(addToAssigner).createTeachersArray('assigner')
+     google.script.run.withSuccessHandler(addToChannel).createTeachersArray('theChannel')
+    };
+  </script>
+
+  </body>
+</html>
